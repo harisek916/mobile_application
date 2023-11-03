@@ -1,0 +1,21 @@
+
+
+class Mobiles(models.Model):
+    name=models.CharField(max_length=200,unique=True)
+    price=models.PositiveIntegerField()
+    brand=models.CharField(max_length=200)
+    specs=models.CharField(max_length=200)
+    display=models.CharField(max_length=200)
+
+    orm queries:
+
+    modelname.objects.create(fieldname=value,.....)
+
+
+    eg:
+    from mobile.models import Mobiles
+    Mobiles.objects.create(name="samsung",price=24000,specs="12gb ram",display="amoled",brand="")
+    Mobiles.objects.create(name="redmi",price=14000,specs="6gb ram",display="amoled",brand="")
+    Mobiles.objects.create(name="realme 9i 5g",price=14500,specs="4gb ram",display="ips led",brand="")
+    Mobiles.objects.create(name="onepluse 7pro",price=48000,specs="8gb ram",display="superamoled",brand="onepluse")
+    Mobiles.objects.create(name="iphone 15pro",price=115000,specs="8gb ram",display="superamoled",brand="apple")
