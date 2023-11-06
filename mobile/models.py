@@ -9,3 +9,5 @@ class Mobiles(models.Model):
     specs=models.CharField(max_length=200)
     display=models.CharField(max_length=200)
     
+    def __str__(self):
+        return self.name

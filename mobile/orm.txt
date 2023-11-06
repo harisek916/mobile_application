@@ -1,5 +1,4 @@
 
-
 class Mobiles(models.Model):
     name=models.CharField(max_length=200,unique=True)
     price=models.PositiveIntegerField()
@@ -7,9 +6,11 @@ class Mobiles(models.Model):
     specs=models.CharField(max_length=200)
     display=models.CharField(max_length=200)
 
-    orm queries:
+====================================================
 
-    modelname.objects.create(fieldname=value,.....)
+orm queries:
+
+ModelName.objects.create(field_name=value,.....)
 
 
     eg:
@@ -19,3 +20,90 @@ class Mobiles(models.Model):
     Mobiles.objects.create(name="realme 9i 5g",price=14500,specs="4gb ram",display="ips led",brand="")
     Mobiles.objects.create(name="onepluse 7pro",price=48000,specs="8gb ram",display="superamoled",brand="onepluse")
     Mobiles.objects.create(name="iphone 15pro",price=115000,specs="8gb ram",display="superamoled",brand="apple")
+
+
+
+================6-11-2023================
+
+>>>for retrieving all objects
+
+>qs=ModelName.objects.all()
+>qs
+
+>qs=Mobiles.objects.all()
+>qs
+
+------------------------------------------------
+
+>>>orm query for selecting a specific object
+
+>qs=ModelName.objects.get(id=2)
+>qs
+
+--------------------------------
+
+>>>orm query for filtering objects
+
+>qs=ModelName.object.filter(condition)
+>qs
+
+eg:- qs=Mobiles.objects.filter(brand=apple)
+     qs
+
+
+Field lookup----- eg:- print phones having prices below 50000
+
+<=__lte
+
+>=__gte
+
+<__lt
+
+>__gt
+
+for exluding-----                           (question=print all samsung brands)
+
+>qs=ModelName.objects.exclude(condition)
+>qs=Model
+----------------------------------------
+
+-------orm query for deleting an object------------
+>ModelName.objects.filter(id).delete()
+
+
+>Mobiles.objects.filter(id=3).delete()      
+
+
+
+-----------orm query for updating an object-----------
+
+>ModelName.objects.filter(id).update(Field_name=value)
+
+>Mobiles.objects.filter(id=1).update(brand="samsung")
+
+
+
+--------------orm query for sorting object------------
+
+ascending-------
+
+>ModelName.objects.all().order_by("price")
+
+eg:- >Mobiles.objects.all().order_by("price")
+
+
+descending------
+
+>modelName.objects.all().order_by("-price")
+
+eg:- >Mobiles.objects.all().order_by("-price")
+
+---------orm query for listing all brands-------------
+
+qs=Mobiles.objects.all().values_list("brand",flat=True)
+qs
+
+for exluding duplicates----------
+
+qs=Mobiles.objects.all().values_list("brand",flat=True).distinct()
+
