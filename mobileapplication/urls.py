@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from mobile import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("mobiles/all",views.MobileListView.as_view(),name="mobile-all"),
 ]
