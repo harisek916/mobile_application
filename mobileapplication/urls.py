@@ -21,4 +21,7 @@ from mobile import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("mobiles/all",views.MobileListView.as_view(),name="mobile-all"),
+    path("mobiles/<int:pk>",views.MobileDetailView.as_view(),name="mobile-detail"),
+    path("mobiles/<int:pk>/remove",views.MobileDeleteView.as_view(),name="mobile-remove"),
+    path("mobiles/add",views.MobileCreateView.as_view(),name="mobile-add")
 ]
