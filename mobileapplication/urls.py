@@ -23,5 +23,7 @@ urlpatterns = [
     path("mobiles/all",views.MobileListView.as_view(),name="mobile-all"),
     path("mobiles/<int:pk>",views.MobileDetailView.as_view(),name="mobile-detail"),
     path("mobiles/<int:pk>/remove",views.MobileDeleteView.as_view(),name="mobile-remove"),
-    path("mobiles/add",views.MobileCreateView.as_view(),name="mobile-add")
+    path("mobiles/add",views.MobileCreateView.as_view(),name="mobile-add"),
+    path("mobiles/<int:pk>/change",views.MobileUpdateView.as_view(),name="mobile-change"),
+    
 ]
