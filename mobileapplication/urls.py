@@ -13,10 +13,12 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+""" 
 from django.contrib import admin
 from django.urls import path
 from mobile import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +27,7 @@ urlpatterns = [
     path("mobiles/<int:pk>/remove",views.MobileDeleteView.as_view(),name="mobile-remove"),
     path("mobiles/add",views.MobileCreateView.as_view(),name="mobile-add"),
     path("mobiles/<int:pk>/change",views.MobileUpdateView.as_view(),name="mobile-change"),
-    
-]
+    path("register",views.SignUpView.as_view(),name="register"),
+    path("login",views.SignInView.as_view(),name="signin"),
+    path("logout",views.SignOutView.as_view(),name="signout")
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

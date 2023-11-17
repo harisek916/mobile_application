@@ -107,3 +107,12 @@ for exluding duplicates----------
 
 qs=Mobiles.objects.all().values_list("brand",flat=True).distinct()
 
+
+
+
+==========for avoid casematching ============== Lookup Field
+
+__iexact
+
+qs=qs.filter(brand__iexact=brand)
+qs=qs.filter(display__iexact=display)
