@@ -6,14 +6,31 @@ from mobile.forms import MobileForm,RegistrationForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from django.utils.decorators import method_decorator
+
+
+
+# decorator
+
+def signin_required(fn):
+    def wrapper(request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request,"invalid session")
+            return redirect("signin")
+        else:
+            return fn(request,*args,**kwargs)       
+    return wrapper
+        
 
 
 # Create your views here.
 
-
-
 # ======================CRUD================================
+
+
+@method_decorator(signin_required,name="dispatch")
 class MobileListView(View):
+
     def get(self,request,*args,**kwargs):
         qs=Mobiles.objects.all()
 
@@ -23,7 +40,7 @@ class MobileListView(View):
 
         if "display" in request.GET:
             display=request.GET.get("display")
-            qs=qs.filter(display__iexact=display)
+            qs=qs.filter(display__iexact=display)   
 
         if "price_lt" in request.GET:
             amount=request.GET.get("price_lt")
@@ -33,8 +50,12 @@ class MobileListView(View):
     
 
 # localhost:8000/mobiles/{id}
+@method_decorator(signin_required,name="dispatch")
 class MobileDetailView(View):
-    def get(self,request,*args,**kwargs):
+
+    def get(self,request,*args,**kwargs):       
+        # if not request.user.is_authenticated:
+        #     return redirect("signin")
         id=kwargs.get("pk")
         qs=Mobiles.objects.get(id=id)
 
@@ -42,7 +63,7 @@ class MobileDetailView(View):
     
 
 # 
-
+@method_decorator(signin_required,name="dispatch")
 class MobileDeleteView(View):
     def get(self,request,*args,**kwargs):
         id=kwargs.get("pk")
@@ -52,7 +73,7 @@ class MobileDeleteView(View):
         return redirect("mobile-all")
 
 
-
+@method_decorator(signin_required,name="dispatch")
 class MobileCreateView(View):
     def get(self,request,*args,**kwargs):
         form=MobileForm()
@@ -71,7 +92,7 @@ class MobileCreateView(View):
             return render(request,"mobile_add.html",{"form":form})
 
         
-
+@method_decorator(signin_required,name="dispatch")
 class MobileUpdateView(View):
     def get(self,request,*args,**kwargs):
         id=kwargs.get("pk")
@@ -117,7 +138,7 @@ class SignUpView(View):
         else:
             messages.error(request,"failed to create account")
             return render(request,"register.html",{"form":form})
-        
+
 
 
 class SignInView(View):
@@ -137,14 +158,15 @@ class SignInView(View):
             print(uname,pwd)
             user_object=authenticate(request,username=uname,password=pwd)
             if user_object:
-                # print("valid credential")
                 login(request,user_object)
+                # print("valid credential")
                 # print("user is---------------",request.user)
                 return redirect("mobile-all")
 
             return render(request,"login.html",{"form":form})
-        
 
+
+@method_decorator(signin_required,name="dispatch")
 class SignOutView(View):
     
     def get(self,request,*args,**kwargs):

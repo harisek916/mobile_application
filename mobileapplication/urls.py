@@ -28,6 +28,6 @@ urlpatterns = [
     path("mobiles/add",views.MobileCreateView.as_view(),name="mobile-add"),
     path("mobiles/<int:pk>/change",views.MobileUpdateView.as_view(),name="mobile-change"),
     path("register",views.SignUpView.as_view(),name="register"),
-    path("login",views.SignInView.as_view(),name="signin"),
+    path("",views.SignInView.as_view(),name="signin"),
     path("logout",views.SignOutView.as_view(),name="signout")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
