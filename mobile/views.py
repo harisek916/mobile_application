@@ -99,7 +99,7 @@ class MobileUpdateView(View):
         obj=Mobiles.objects.get(id=id)
         form=MobileForm(instance=obj)
         return render(request,"mobile_edit.html",{"form":form})
-    
+   
     def post(self,request,*args,**kwargs):
         id=kwargs.get("pk")
         obj=Mobiles.objects.get(id=id)
@@ -155,14 +155,15 @@ class SignInView(View):
         if form.is_valid():
             uname=form.cleaned_data.get("username")
             pwd=form.cleaned_data.get("password")
-            print(uname,pwd)
+            # print(uname,pwd)
             user_object=authenticate(request,username=uname,password=pwd)
             if user_object:
                 login(request,user_object)
                 # print("valid credential")
                 # print("user is---------------",request.user)
+                messages.success(request,f"welcome {request.user}")
                 return redirect("mobile-all")
-
+            messages.error(request,"invalid credential")
             return render(request,"login.html",{"form":form})
 
 
